@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>King of Fried Rice | Singapore Hawker Favourite</title>
+  <meta name="description" content="King of Fried Rice – Singapore's favourite fried rice hawker chain. Wok hei perfected since 2018. Find us at multiple outlets across Singapore.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ── RESET ── */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; color: #1a1a1a; line-height: 1.6; }
+    a { text-decoration: none; color: inherit; }
+    img { display: block; max-width: 100%; }
+
+    /* ── VARIABLES ── */
+    :root {
+      --red: #c0392b;
+      --red-dark: #a93226;
+      --gold: #f39c12;
+      --bg-warm: #fdf6f0;
+      --text-muted: #666;
+      --border: #eee;
+      --radius: 12px;
+    }
+
+    /* ── CONTAINER ── */
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; }
+
+    /* ── NAVBAR ── */
+    .navbar {
+      position: sticky; top: 0; background: #fff;
+      border-bottom: 1px solid var(--border);
+      z-index: 100; padding: 1rem 0;
+    }
+    .navbar .container { display: flex; align-items: center; justify-content: space-between; }
+    .logo { font-size: 1.15rem; font-weight: 700; color: var(--red); display: flex; align-items: center; gap: 0.4rem; }
+    .nav-links { display: flex; list-style: none; gap: 2rem; align-items: center; }
+    .nav-links a { color: #333; font-size: 0.95rem; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--red); }
+    .btn-nav {
+      background: var(--red); color: #fff !important;
+      padding: 0.5rem 1.1rem; border-radius: 6px;
+      font-weight: 500;
+    }
+    .btn-nav:hover { background: var(--red-dark) !important; }
+    .menu-toggle { display: none; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #333; }
+
+    /* ── HERO WITH SLIDER ── */
+    .hero {
+      position: relative; min-height: 92vh;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden; text-align: center; color: #fff;
+    }
+    .hero-slides { position: absolute; inset: 0; z-index: 0; }
+    .hero-slide {
+      position: absolute; inset: 0;
+      background-size: cover; background-position: center;
+      transition: opacity 1s ease;
+      opacity: 0;
+    }
+    .hero-slide::after {
+      content: ''; position: absolute; inset: 0;
+      background: rgba(0,0,0,0.52);
+    }
+    .hero-slide.active { opacity: 1; }
+    .hero-content { position: relative; z-index: 1; max-width: 700px; padding: 0 1rem; }
+    .hero-badge {
+      display: inline-block; background: var(--gold); color: #fff;
+      padding: 0.3rem 1rem; border-radius: 20px; font-size: 0.85rem;
+      font-weight: 600; margin-bottom: 1rem; letter-spacing: 0.03em;
+    }
+    .hero-content h1 {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 700; margin-bottom: 1rem; line-height: 1.15;
+    }
+    .hero-content p { font-size: 1.1rem; opacity: 0.9; margin-bottom: 2rem; }
+    .hero-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--red); color: #fff;
+      padding: 0.85rem 2rem; border-radius: 8px;
+      font-weight: 600; font-size: 1rem;
+      transition: background 0.2s;
+    }
+    .btn-primary:hover { background: var(--red-dark); }
+    .btn-outline {
+      background: transparent; color: #fff;
+      padding: 0.85rem 2rem; border-radius: 8px;
+      font-weight: 600; font-size: 1rem;
+      border: 2px solid rgba(255,255,255,0.7);
+      transition: background 0.2s;
+    }
+    .btn-outline:hover { background: rgba(255,255,255,0.15); }
+    /* Slide dots */
+    .hero-dots {
+      position: absolute; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
+      display: flex; gap: 8px; z-index: 2;
+    }
+    .dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: rgba(255,255,255,0.45); cursor: pointer;
+      transition: background 0.3s;
+    }
+    .dot.active { background: #fff; }
+
+    /* ── STATS STRIP ── */
+    .stats-strip { background: var(--red); color: #fff; padding: 1.2rem 0; }
+    .stats-strip .container { display: flex; justify-content: space-around; flex-wrap: wrap; gap: 1rem; text-align: center; }
+    .stat-item strong { display: block; font-size: 1.6rem; font-weight: 700; }
+    .stat-item span { font-size: 0.85rem; opacity: 0.85; }
+
+    /* ── SECTIONS ── */
+    section { padding: 5rem 0; }
+    .section-title { font-size: 2rem; font-weight: 700; text-align: center; margin-bottom: 0.5rem; }
+    .section-sub { text-align: center; color: var(--text-muted); margin-bottom: 3rem; }
+
+    /* ── MENU TABS ── */
+    .menu-tabs { display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; margin-bottom: 2.5rem; }
+    .tab-btn {
+      padding: 0.5rem 1.2rem; border-radius: 20px; border: 1.5px solid var(--border);
+      background: #fff; cursor: pointer; font-size: 0.9rem; font-weight: 500;
+      color: #555; transition: all 0.2s; font-family: inherit;
+    }
+    .tab-btn.active, .tab-btn:hover { background: var(--red); color: #fff; border-color: var(--red); }
+
+    /* ── MENU GRID ── */
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 1.4rem;
+    }
+    .menu-card {
+      background: #fff; border: 1px solid var(--border);
+      border-radius: var(--radius); overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .menu-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+    .menu-card-img {
+      width: 100%; height: 170px; object-fit: cover;
+      background: #f5f5f5;
+    }
+    .menu-card-body { padding: 1rem; }
+    .menu-card-body h3 { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.35rem; }
+    .menu-card-body p { color: var(--text-muted); font-size: 0.82rem; margin-bottom: 0.75rem; line-height: 1.5; }
+    .menu-card-footer { display: flex; align-items: center; justify-content: space-between; }
+    .price { font-size: 1.1rem; font-weight: 700; color: var(--red); }
+    .badge {
+      font-size: 0.72rem; font-weight: 600;
+      padding: 2px 8px; border-radius: 10px;
+    }
+    .badge-popular { background: #fff3cd; color: #856404; }
+    .badge-top { background: #d4edda; color: #155724; }
+    .badge-new { background: #cfe2ff; color: #084298; }
+    .menu-cat { display: none; }
+    .menu-cat.visible { display: grid; }
+
+    /* ── ABOUT ── */
+    .about { background: var(--bg-warm); }
+    .about-inner {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 4rem; align-items: center;
+    }
+    .about-text h2 { font-size: 2rem; font-weight: 700; margin-bottom: 1.2rem; }
+    .about-text p { color: #444; margin-bottom: 1rem; }
+    .about-text blockquote {
+      border-left: 4px solid var(--red);
+      padding-left: 1rem; margin: 1.5rem 0;
+      font-style: italic; color: #555; font-size: 1.05rem;
+    }
+    .about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 2rem; }
+    .about-stat { background: #fff; border-radius: 10px; padding: 1rem; text-align: center; border: 1px solid var(--border); }
+    .about-stat strong { display: block; font-size: 1.5rem; color: var(--red); font-weight: 700; }
+    .about-stat span { font-size: 0.82rem; color: var(--text-muted); }
+    .about-img img { width: 100%; border-radius: var(--radius); }
+
+    /* ── FIND US ── */
+    .locations-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem; margin-bottom: 3rem;
+    }
+    .location-card {
+      background: #fff; border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.5rem;
+    }
+    .location-card h3 { font-size: 1rem; font-weight: 600; margin-bottom: 0.75rem; color: var(--red); }
+    .location-card p { font-size: 0.9rem; color: #444; margin-bottom: 0.4rem; }
+    .map-embed { border-radius: var(--radius); overflow: hidden; }
+    .map-embed iframe { width: 100%; height: 350px; border: 0; }
+
+    /* ── REVIEWS ── */
+    .reviews { background: var(--bg-warm); }
+    .reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; }
+    .review-card { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; }
+    .review-stars { color: var(--gold); font-size: 1rem; margin-bottom: 0.5rem; }
+    .review-text { font-size: 0.9rem; color: #444; font-style: italic; margin-bottom: 1rem; }
+    .review-author { font-size: 0.85rem; font-weight: 600; color: var(--text-muted); }
+
+    /* ── ORDER CTA ── */
+    .order-cta { background: var(--red); color: #fff; text-align: center; }
+    .order-cta h2 { color: #fff; margin-bottom: 0.75rem; }
+    .order-cta p { opacity: 0.9; margin-bottom: 2rem; }
+    .order-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn-whatsapp {
+      background: #25D366; color: #fff;
+      padding: 1rem 2.5rem; border-radius: 8px;
+      font-weight: 600; font-size: 1rem; display: inline-flex; align-items: center; gap: 0.5rem;
+    }
+    .btn-foodpanda {
+      background: #fff; color: var(--red);
+      padding: 1rem 2.5rem; border-radius: 8px;
+      font-weight: 600; font-size: 1rem;
+    }
+
+    /* ── FOOTER ── */
+    footer { background: #1a1a1a; color: #aaa; padding: 2.5rem 0; }
+    .footer-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+    .footer-brand { font-size: 1.1rem; font-weight: 700; color: var(--red); }
+    .social-links { display: flex; gap: 1.5rem; }
+    .social-links a { color: #aaa; font-size: 0.9rem; transition: color 0.2s; }
+    .social-links a:hover { color: #fff; }
+    .footer-copy { font-size: 0.85rem; }
+
+    /* ── MOBILE ── */
+    @media (max-width: 768px) {
+      .menu-toggle { display: block; }
+      .nav-links { display: none; flex-direction: column; position: absolute; top: 65px; left: 0; right: 0; background: #fff; padding: 1rem; border-bottom: 1px solid var(--border); z-index: 99; }
+      .nav-links.open { display: flex; }
+      .about-inner { grid-template-columns: 1fr; }
+      .about-img { order: -1; }
+      .footer-inner { flex-direction: column; text-align: center; }
+      .stats-strip .container { gap: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="container">
+    <a href="#" class="logo">🍳 King of Fried Rice</a>
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">☰</button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#about">Our Story</a></li>
+      <li><a href="#find-us">Find Us</a></li>
+      <li><a href="#contact" class="btn-nav">Order Now</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO SLIDER -->
+<section class="hero">
+  <div class="hero-slides" id="heroSlides">
+    <!-- Images are real product photos from deliveryhero -->
+    <div class="hero-slide active" style="background-image: url('https://images.deliveryhero.io/image/fd-sg/LH/erdb-hero.jpg?width=1200&quality=70')"></div>
+    <div class="hero-slide" style="background-image: url('https://images.deliveryhero.io/image/fd-sg/Products/16329994.jpg?width=900&height=600')"></div>
+    <div class="hero-slide" style="background-image: url('https://images.deliveryhero.io/image/fd-sg/Products/16329995.jpg?width=900&height=600')"></div>
+    <div class="hero-slide" style="background-image: url('https://images.deliveryhero.io/image/fd-sg/Products/41918837.jpg?width=900&height=600')"></div>
+    <div class="hero-slide" style="background-image: url('https://images.deliveryhero.io/image/fd-sg/Products/16329981.jpg?width=900&height=600')"></div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-badge">⭐ 4.9 Rating · 20+ Outlets Across Singapore</div>
+    <h1>Singapore's King of<br>Fried Rice</h1>
+    <p>Wok hei perfected since 2018. Egg, XO, Tom Yum, Mala — every grain tells the story.</p>
+    <div class="hero-actions">
+      <a href="#menu" class="btn-primary">View Full Menu</a>
+      <a href="#find-us" class="btn-outline">Find Us Near You</a>
+    </div>
+  </div>
+  <div class="hero-dots" id="heroDots"></div>
+</section>
+
+<!-- STATS STRIP -->
+<div class="stats-strip">
+  <div class="container">
+    <div class="stat-item"><strong>20+</strong><span>Outlets in Singapore</span></div>
+    <div class="stat-item"><strong>4.9★</strong><span>Average Rating</span></div>
+    <div class="stat-item"><strong>2018</strong><span>Est. at Golden Mile Tower</span></div>
+    <div class="stat-item"><strong>Daily</strong><span>10:30am – 9:00pm</span></div>
+  </div>
+</div>
+
+<!-- MENU -->
+<section id="menu">
+  <div class="container">
+    <h2 class="section-title">Our Menu</h2>
+    <p class="section-sub">Every plate cooked fresh to order with premium Japanese rice</p>
+
+    <div class="menu-tabs">
+      <button class="tab-btn active" data-cat="all">All</button>
+      <button class="tab-btn" data-cat="egg">Egg Fried Rice</button>
+      <button class="tab-btn" data-cat="xo">XO Fried Rice</button>
+      <button class="tab-btn" data-cat="tomyum">Tom Yum</button>
+      <button class="tab-btn" data-cat="mala">Mala</button>
+      <button class="tab-btn" data-cat="special">Limited Offer</button>
+      <button class="tab-btn" data-cat="snacks">Snacks</button>
+    </div>
+
+    <!-- EGG FRIED RICE -->
+    <div class="menu-cat visible" id="cat-egg" style="grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.4rem;">
+      <div class="menu-card" data-cat="egg">
+        <img class="menu-card-img" src="https://images.deliveryhero.io/image/fd-sg/Products/16329981.jpg?width=400&height=280" alt="Egg Fried Rice" loading="lazy">
+        <div class="menu-card-body">
+          <h3>1A. Egg Fried Rice 蛋炒饭</h3>
+          <p>Fluffy and savoury golden egg fried rice.</p>
+          <div class="menu-card-footer">
+            <span class="price">from S$6.60</span>
+            <span class="badge badge-top">#1 Most Liked</span>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card" data-cat="egg">
+        <img class="menu-card-img" src="https://images.deliveryhero.io/image/fd-sg/Products/16329983.jpg?width=400&height=280" alt="Shrimp Egg Fried Rice" loading="lazy">
+        <div class="menu-card-body">
+          <h3>1B. Shrimp Egg Fried Rice 虾蛋炒饭</h3>
+          <p>Stir-fried fluffy egg fried rice topped with shrimp.</p>
+          <div class="menu-card-footer">
+            <span class="price">from S$9.10</span>
+            <span class="badge badge-popular">Popular</span>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card" data-cat="egg">
+        <img class="menu-card-img" src="https://images.deliveryhero.io/image/fd-sg/Products/16329982.jpg?width=400&height=280" alt="Pork Cutlet Egg Fried Rice" loading="lazy">
+        <div class="menu-card-body">
+          <h3>1C. Pork Cutlet Egg Fried Rice 猪扒蛋炒饭</h3>
+          <p>Fluffy egg fried rice served with crispy pork cutlet.</p>
+          <div class="menu-card-footer">
+            <span class="price">from S$9.10</span>
+            <span class="badge badge-popular">Popular</span>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card" data-cat="egg">
+        <img class="menu-card-img" src="https://images.deliveryhero.io/image/fd-sg/Products/16329984.jpg?width=400&height=280" alt="Crab Meat Tobiko Egg Fried Rice" loading="lazy">
+        <div class="menu-card-body">
+          <h3>1D. Crab Meat &amp; Tobiko Egg Fried Rice 蟹肉鱼卵蛋炒饭</h3>
+          <p>Golden egg fried rice topped with crabmeat and tobiko.</p>
+          <div class="menu-card-footer">
+            <span class="price">from S$12.90</span>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card" data-cat="egg">
+        <img class="menu-card-img" src="https://images.deliveryhero.io/image/fd-sg/Products/36419300.jpg?width=400&height=280" alt="Chicken Chop Egg Fried Rice" loading="lazy">
+        <div class="menu-card-body">
+          <h3>1E. Chicken Chop Egg Fried Rice 鸡扒蛋炒饭</h3>
+          <p>Fluffy golden egg fried rice served with chicken chop.</p>
+          <div class="menu-card-footer">
+            <span class="price">from S$9.10</span>
+            <span class="badge badge-popular">Popular</span>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card" data-cat="egg">
+        <img class="menu-card-img" src="https://images.deliveryhero.io/image/fd-sg/Products/24247322.jpg?width=400&height=280" alt="Luncheon Meat Egg Fried Rice" loading="lazy">
+        <div class="menu-card-body">
+          <h3>1F. Luncheon Meat Egg Fried Rice</h3>
+          <p>Fluffy golden egg fried rice served with luncheon meat.</p>
+          <div class="menu-card-footer">
+            <span class="price">from S$8.90</span>
+            <span class="badge badge-popular">Popular</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- XO FRIED RICE -->
+    <div class="menu-cat" id="cat-xo" style="grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.4rem;">
+      <div class="menu-card" data-cat="xo">
+        <img class="menu-card-img" src="https://images.deliveryhero.io/image/fd-sg/Products/16329985.jpg?width=400&height=280" alt="XO Fried Rice" loading="lazy">
+        <div class="menu-card-body">
+          <h3>2A. XO Fried Rice XO炒饭</h3>
+          <p>Stir-fried fluffy golden fried rice prepared with XO sauce.</p>
+          <div class="menu-card-footer"><span class="price">from S$8.10</span></div>
+        </div>
+      </div>
+      <div class="menu-card" data-cat="xo">
+        <img class="menu-card-img" src="https://images.deliveryhero.io/image/fd-sg/Products/16329987.jpg?width=400&height=280" alt="Shrimp XO Fried Rice" loading="lazy">
+        <div class="menu-card-body">
+          <h3>2B. Shrimp XO Fried Rice 虾XO炒饭</h3>
+          <p>Stir-fried fluffy golden XO fried rice topped with shrimp.</p>
+          <div class="menu-card-footer"><span class="price">from S$10.60</span></div>
+        </div>
+      </div>
+      <div class="menu-card" data-cat="xo">
+        <img class="menu-card-img" src="https://images.deliveryhero.io/image/fd-sg/Products/16329986.jpg?width=400&height=280" alt="Pork Cutlet XO Fried Rice" loading="lazy">
+        <div class="menu-card-body">
+          <h3>2C. Pork Cutlet XO Fried Rice 猪扒XO炒饭</h3>
+          <p>Stir-fried fluffy XO fried rice served with crispy pork cutlet.</p>
+          <div class="menu-card-footer">
+            <span class="price">from S$10.60</span>
+            <span class="badge badge-popular">Popular</span>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card" data-cat="xo">
+        <img class="menu-card-img" src="https://images.deliveryhero.io/image/fd-sg/Products/16329988.jpg?width=400&height=280" alt="Crab Meat Tobiko XO Fried Rice" loading="lazy">
+        <div class="menu-card-body">
+          <h3>2D. Crab Meat &amp; Tobiko XO Fried Rice 蟹肉鱼卵XO炒饭</h3>
+          <p>Stir-fried fluffy golden XO fried rice topped with crabmeat and tobiko.</p>
+          <div class="menu-card-footer"><span class="price">from S$14.30</span></div>
+        </div>
+      </div>
+      <div class="menu-card" data-cat="xo">
+        <img class="menu-card-img" src="https://images.deliveryhero.io/image/fd-sg/Products/36419301.jpg?width=400&height=280" alt="Chicken Chop XO Fried Rice" loading="lazy">
+        <div class="menu-card-body">
+          <h3>2E. Chicken Chop XO Fried Rice 鸡扒XO炒饭</h3>
+          <p>Stir-fried fluffy golden XO fried rice served with chicken chop.</p>
+          <div class="menu-card-footer">
+            <span class="price">from S$10.60</span>
+            <span class="badge badge-popular">Popular</span>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card" data-cat="xo">
+        <img class="menu-card-img" src="https://images.deliveryhero.io/image/fd-sg/Products/24248533.jpg?width=400&height=280" alt="Luncheon Meat XO Egg Fried Rice" loading="lazy">
+        <div class="menu-card-body">
+          <h3>2F. Luncheon Meat XO Egg Fried Rice</h3>
+          <p>Stir-fried fluffy XO fried rice served with flavourful luncheon meat.</p>
+          <div class="menu-card-footer"><span class="price">from S$9.90</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TOM YUM -->
+    <div class="menu-cat" id="cat-tomyum" style="grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.4rem;">
+      <div class="menu-card" data-cat="tomyum">
+        <img class="menu-card-img" src="https://images.deliveryhero.io/image/fd-sg/Products/16329989.jpg?width=400&height=280" alt="Tom Yum Fried Rice" loading="lazy">
+        <div class="menu-card-body">
+          <h3>3A. Tom Yum Fried Rice 冬炎炒饭</h3>
+          <p>A sour, sweet and savoury Thai fried rice.</p>
+          <div class="menu-card-footer"><span class="price">from S$7.60</span></div>
+        </div>
+      </div>
+      <div class="menu-card" data-cat="tomyum">
+        <img class="menu-card-img" src="https://images.deliveryhero.io/image/fd-sg/Products/16329991.jpg?width=400&height=280" alt="Shrimp Tom Yum Fried Rice" loading="lazy">
+        <div class="menu-card-body">
+          <h3>3B. Shrimp Tom Yum Fried Rice 虾冬炎炒饭</h3>
+          <p>Stir-fried fluffy Tom Yum fried rice topped with shrimp.</p>
+          <div class="menu-card-footer"><span class="price">from S$10.10</span></div>
+        </div>
+      </div>
+      <div class="menu-card" data-cat="tomyum">
+        <img class="menu-card-img" src="https://images.deliveryhero.io/image/fd-sg/Products/16329990.jpg?width=400&height=280" alt="Pork Cutlet Tom Yum Fried Rice" loading="lazy">
+        <div class="menu-card-body">
+          <h3>3C. Pork Cutlet Tom Yum Fried Rice 猪扒冬炎炒饭</h3>
+          <p>Stir-fried fluffy tom yum fried rice served with crispy pork cutlet.</p>
+          <div class="menu-card-footer"><span class="price">from S$10.10</span></div>
+        </div>
+      </div>
+      <div class="menu-card" data-cat="tomyum">
+        <img class="menu-card-img" src="https://images.deliveryhero.io/image/fd-sg/Products/16329992.jpg?width=400&height=280" alt="Crab Meat Tom Yum Fried Rice" loading="lazy">
+        <div class="menu-card-body">
+          <h3>3D. Crab Meat &amp; Tobiko Tom Yum Fried Rice 蟹肉鱼卵冬炎炒饭</h3>
+          <p>Stir-fried golden Tom Yum fried rice topped with crabmeat and tobiko.</p>
+          <div class="menu-card-footer"><span class="price">from S$13.90</span></div>
+        </div>
+      </div>
+      <div class="menu-card" data-cat="tomyum">
+        <img class="menu-card-img" src="https://images.deliveryhero.io/image/fd-sg/Products/36419302.jpg?width=400&height=280" alt="Chicken Chop Tom Yum Fried Rice" loading="lazy">
+        <div class="menu-card-body">
+          <h3>3E. Chicken Chop Tom Yum Fried Rice 鸡扒冬炎炒饭</h3>
+          <p>Stir-fried fluffy golden Tom Yum fried rice served with chicken chop.</p>
+          <div class="menu-card-footer"><span class="price">from S$10.10</span></div>
+        </div>
+      </div>
+      <div class="menu-card" data-cat="tomyum">
+        <img class="menu-card-img" src="https://images.deliveryhero.io/image/fd-sg/Products/24248147.jpg?width=400&height=280" alt="Luncheon Meat Tom Yum Egg Fried Rice" loading="lazy">
+        <div class="menu-card-body">
+          <h3>3F. Luncheon Meat Tom Yum Egg Fried Rice</h3>
+          <p>Stir-fried fluffy golden tom yum fried rice served with luncheon meat.</p>
+          <div class="menu-card-footer"><span class="price">from S$9.90</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MALA -->
+    <div class="menu-cat" id="cat-mala" style="grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.4rem;">
+      <div class="menu-card" data-cat="mala">
+        <img class="menu-card-img" src="https://images.deliveryhero.io/image/fd-sg/Products/16329993.jpg?width=400&height=280" alt="Mala Fried Rice" loading="lazy">
+        <div class="menu-card-body">
+          <h3>4A. Mala Fried Rice 麻辣炒饭</h3>
+          <p>Stir-fried fluffy golden fried rice prepared with mala seasoning.</p>
+          <div class="menu-card-footer"><span class="price">from S$7.60</span></div>
+        </div>
+      </div>
+      <div class="menu-card" data-cat="mala">
+        <img class="menu-card-img" src="https://images.deliveryhero.io/image/fd-sg/Products/16329995.jpg?width=400&height=280" alt="Shrimp Mala Fried Rice" loading="lazy">
+        <div class="menu-card-body">
+          <h3>4B. Shrimp Mala Fried Rice 虾麻辣炒饭</h3>
+          <p>Stir-fried fluffy mala fried rice topped with shrimp.</p>
+          <div class="menu-card-footer">
+            <span class="price">from S$10.10</span>
+            <span class="badge badge-top">#2 Most Liked</span>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card" data-cat="mala">
+        <img class="menu-card-img" src="https://images.deliveryhero.io/image/fd-sg/Products/16329994.jpg?width=400&height=280" alt="Pork Cutlet Mala Fried Rice" loading="lazy">
+        <div class="menu-card-body">
+          <h3>4C. Pork Cutlet Mala Fried Rice 猪扒麻辣炒饭</h3>
+          <p>Stir-fried fluffy mala fried rice served with crispy pork cutlet.</p>
+          <div class="menu-card-footer">
+            <span class="price">from S$10.10</span>
+            <span class="badge badge-top">#3 Most Liked</span>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card" data-cat="mala">
+        <img class="menu-card-img" src="https://images.deliveryhero.io/image/fd-sg/Products/16329996.jpg?width=400&height=280" alt="Crab Meat Tobiko Mala Fried Rice" loading="lazy">
+        <div class="menu-card-body">
+          <h3>4D. Crab Meat &amp; Tobiko Mala Fried Rice 蟹肉鱼卵麻辣炒饭</h3>
+          <p>Stir-fried fluffy golden mala fried rice topped with crabmeat and tobiko.</p>
+          <div class="menu-card-footer"><span class="price">from S$13.90</span></div>
+        </div>
+      </div>
+      <div class="menu-card" data-cat="mala">
+        <img class="menu-card-img" src="https://images.deliveryhero.io/image/fd-sg/Products/36419303.jpg?width=400&height=280" alt="Chicken Chop Mala Fried Rice" loading="lazy">
+        <div class="menu-card-body">
+          <h3>4E. Chicken Chop Mala Fried Rice 鸡扒麻辣炒饭</h3>
+          <p>Stir-fried fluffy golden Mala fried rice served with chicken chop.</p>
+          <div class="menu-card-footer"><span class="price">from S$10.10</span></div>
+        </div>
+      </div>
+      <div class="menu-card" data-cat="mala">
+        <img class="menu-card-img" src="https://images.deliveryhero.io/image/fd-sg/Products/24248148.jpg?width=400&height=280" alt="Luncheon Meat Mala Egg Fried Rice" loading="lazy">
+        <div class="menu-card-body">
+          <h3>4F. Luncheon Meat Mala Egg Fried Rice</h3>
+          <p>Stir-fried fluffy golden mala fried rice served with luncheon meat.</p>
+          <div class="menu-card-footer"><span class="price">from S$9.90</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LIMITED OFFER -->
+    <div class="menu-cat" id="cat-special" style="grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.4rem;">
+      <div class="menu-card" data-cat="special">
+        <img class="menu-card-img" src="https://images.deliveryhero.io/image/fd-sg/Products/41918837.jpg?width=400&height=280" alt="Streaky Bacon Egg Fried Rice" loading="lazy">
+        <div class="menu-card-body">
+          <h3>5G. Streaky Bacon Egg Fried Rice 培根蛋炒饭</h3>
+          <p>Premium Japanese rice, fragrant umami bacon, fluffy eggs topped with spring onions.</p>
+          <div class="menu-card-footer">
+            <span class="price">from S$9.10</span>
+            <span class="badge badge-top">#4 Most Liked</span>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card" data-cat="special">
+        <img class="menu-card-img" src="https://images.deliveryhero.io/image/fd-sg/Products/41918846.jpg?width=400&height=280" alt="Streaky Bacon XO Egg Fried Rice" loading="lazy">
+        <div class="menu-card-body">
+          <h3>5G. Streaky Bacon XO Egg Fried Rice 培根XO蛋炒饭</h3>
+          <p>Bacon fried rice with Taiwanese XO sauce — aromatic, smoky, salty and umami.</p>
+          <div class="menu-card-footer">
+            <span class="price">from S$10.60</span>
+            <span class="badge badge-new">Limited Time</span>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card" data-cat="special">
+        <img class="menu-card-img" src="https://images.deliveryhero.io/image/fd-sg/Products/41918848.jpg?width=400&height=280" alt="Streaky Bacon Tom Yam Egg Fried Rice" loading="lazy">
+        <div class="menu-card-body">
+          <h3>5G. Streaky Bacon Tom Yam Egg Fried Rice 培根冬炎蛋炒饭</h3>
+          <p>Bacon fried rice with Thai Tom Yum sauce — savoury, sour, and spicy.</p>
+          <div class="menu-card-footer">
+            <span class="price">from S$10.10</span>
+            <span class="badge badge-new">Limited Time</span>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card" data-cat="special">
+        <img class="menu-card-img" src="https://images.deliveryhero.io/image/fd-sg/Products/41918850.jpg?width=400&height=280" alt="Streaky Bacon Mala Egg Fried Rice" loading="lazy">
+        <div class="menu-card-body">
+          <h3>5G. Streaky Bacon Mala Egg Fried Rice 培根麻辣蛋炒饭</h3>
+          <p>Bacon fried rice with Chinese Style Mala sauce — spicy and numbing.</p>
+          <div class="menu-card-footer">
+            <span class="price">from S$10.10</span>
+            <span class="badge badge-new">Limited Time</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SNACKS -->
+    <div class="menu-cat" id="cat-snacks" style="grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.4rem;">
+      <div class="menu-card" data-cat="snacks">
+        <img class="menu-card-img" src="https://images.deliveryhero.io/image/fd-sg/Products/51655158.jpg?width=400&height=280" alt="Luncheon Meat Fries" loading="lazy">
+        <div class="menu-card-body">
+          <h3>Luncheon Meat Fries 午餐肉薯条</h3>
+          <p>Crispy fries topped with savory luncheon meat — salty, crunchy perfection.</p>
+          <div class="menu-card-footer"><span class="price">S$4.50</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="about">
+  <div class="container">
+    <div class="about-inner">
+      <div class="about-text">
+        <h2>A Hawker Stall That Became a Singapore Institution</h2>
+        <p>King of Fried Rice was born in 2018 at Golden Mile Tower, founded by Lester Li — a 25-year-old former chef at Jumbo Group. Armed with a wok, a vision, and an obsession with <em>wok hei</em>, Lester set out to elevate the humble plate of fried rice into something truly extraordinary.</p>
+        <blockquote>"Every grain of rice should carry the breath of the wok. That's what we chase every single day."</blockquote>
+        <p>From a single stall, King of Fried Rice grew to over 20 outlets across Singapore — from Yishun to ION Orchard, Bukit Batok to Serangoon. The secret? Premium Japanese rice, market-fresh ingredients sourced daily, and a team that refuses to cut corners.</p>
+        <p>Whether you're a loyal regular or discovering us for the first time, every plate is made fresh to order, just for you.</p>
+        <div class="about-stats">
+          <div class="about-stat"><strong>2018</strong><span>Founded</span></div>
+          <div class="about-stat"><strong>20+</strong><span>Outlets</span></div>
+          <div class="about-stat"><strong>4.9★</strong><span>Rating</span></div>
+          <div class="about-stat"><strong>Daily</strong><span>Fresh Ingredients</span></div>
+        </div>
+      </div>
+      <div class="about-img">
+        <img src="https://images.deliveryhero.io/image/fd-sg/LH/erdb-hero.jpg?width=600&quality=80" alt="King of Fried Rice stall" style="border-radius: 12px;">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="reviews">
+  <div class="container">
+    <h2 class="section-title">What Our Customers Say</h2>
+    <p class="section-sub">4.9 stars across our outlets</p>
+    <div class="reviews-grid">
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Generous portion and my kids enjoyed it. The egg fried rice is just the right amount of wok hei!"</p>
+        <span class="review-author">— Audrey, Feb 2026</span>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"This shop is very good. The mala pork cutlet fried rice is my go-to every week without fail."</p>
+        <span class="review-author">— YUCHEN, Nov 2025</span>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Best fried rice in Singapore — no debate. The XO sauce version is absolutely incredible."</p>
+        <span class="review-author">— Regular Customer</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FIND US -->
+<section id="find-us">
+  <div class="container">
+    <h2 class="section-title">Find Us</h2>
+    <p class="section-sub">Over 20 locations across Singapore · Mon–Sun 10:30am–9:00pm</p>
+
+    <div class="locations-grid">
+      <div class="location-card">
+        <h3>📍 Fusionpolis (Galaxis)</h3>
+        <p>Fusionopolis Pl, #01-33, Singapore 138522</p>
+        <p>🕐 Daily 10:30am – 9:00pm</p>
+      </div>
+      <div class="location-card">
+        <h3>📍 ION Orchard</h3>
+        <p>2 Orchard Turn, ION Orchard, Singapore</p>
+        <p>🕐 Daily 10:30am – 9:00pm</p>
+      </div>
+      <div class="location-card">
+        <h3>📍 Holland Close</h3>
+        <p>31 Holland Close, Singapore</p>
+        <p>🕐 Daily 10:30am – 9:00pm</p>
+      </div>
+      <div class="location-card">
+        <h3>📍 Tampines Mart</h3>
+        <p>Tampines Mart, Singapore</p>
+        <p>🕐 Daily 10:30am – 9:00pm</p>
+      </div>
+    </div>
+
+    <!-- 
+      HOW TO EMBED A REAL GOOGLE MAP:
+      1. Go to maps.google.com and search for "King of Fried Rice Singapore"
+      2. Click Share → Embed a map
+      3. Copy the <iframe> code and replace the placeholder below
+
+      For now, this links to their actual Google Maps search:
+    -->
+    <div class="map-embed">
+      <iframe
+        src="<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.791394004209!2d103.78550697596577!3d1.2999900617320095!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31da1b002151352b%3A0xb700c835cfcf3b60!2sKing%20of%20Fried%20Rice!5e0!3m2!1sen!2ssg!4v1776525607041!5m2!1sen!2ssg" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>"
+        allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+        title="King of Fried Rice locations">
+      </iframe>
+    </div>
+  </div>
+</section>
+
+<!-- ORDER CTA -->
+<section id="contact" class="order-cta">
+  <div class="container">
+    <h2>Order Now</h2>
+    <p>Reach us on WhatsApp or order delivery through Foodpanda</p>
+    <div class="order-buttons">
+      <a href="https://wa.me/6512345678" class="btn-whatsapp" target="_blank" rel="noopener">
+        💬 WhatsApp Us
+      </a>
+      <a href="https://www.foodpanda.sg/chain/cz1ow/king-of-fried-rice" class="btn-foodpanda" target="_blank" rel="noopener">
+        🐼 Order on Foodpanda
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <span class="footer-brand">🍳 King of Fried Rice</span>
+      <div class="social-links">
+        <a href="https://www.facebook.com/KingOfFriedRice" target="_blank" rel="noopener">Facebook</a>
+        <a href="https://www.instagram.com/kingoffriedrice" target="_blank" rel="noopener">Instagram</a>
+      </div>
+      <span class="footer-copy">© 2026 King of Fried Rice · Singapore</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ── MOBILE MENU ──
+const menuToggle = document.getElementById('menuToggle');
+const navLinks = document.getElementById('navLinks');
+menuToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
+document.querySelectorAll('.nav-links a').forEach(link => {
+  link.addEventListener('click', () => navLinks.classList.remove('open'));
+});
+
+// ── HERO SLIDER ──
+const slides = document.querySelectorAll('.hero-slide');
+const dotsContainer = document.getElementById('heroDots');
+let current = 0;
+
+// Create dots
+slides.forEach((_, i) => {
+  const dot = document.createElement('button');
+  dot.className = 'dot' + (i === 0 ? ' active' : '');
+  dot.setAttribute('aria-label', `Go to slide ${i + 1}`);
+  dot.addEventListener('click', () => goTo(i));
+  dotsContainer.appendChild(dot);
+});
+
+function goTo(n) {
+  slides[current].classList.remove('active');
+  dotsContainer.children[current].classList.remove('active');
+  current = (n + slides.length) % slides.length;
+  slides[current].classList.add('active');
+  dotsContainer.children[current].classList.add('active');
+}
+
+// Auto-advance every 4 seconds
+let timer = setInterval(() => goTo(current + 1), 4000);
+dotsContainer.addEventListener('click', () => { clearInterval(timer); timer = setInterval(() => goTo(current + 1), 4000); });
+
+// ── MENU TABS ──
+const tabBtns = document.querySelectorAll('.tab-btn');
+const menuCats = document.querySelectorAll('.menu-cat');
+
+tabBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    const cat = btn.dataset.cat;
+
+    // Update active tab
+    tabBtns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    // Show/hide categories
+    menuCats.forEach(el => {
+      el.classList.remove('visible');
+      el.style.display = 'none';
+    });
+
+    if (cat === 'all') {
+      // Show all
+      menuCats.forEach(el => {
+        el.classList.add('visible');
+        el.style.display = 'grid';
+      });
+    } else {
+      const target = document.getElementById('cat-' + cat);
+      if (target) {
+        target.classList.add('visible');
+        target.style.display = 'grid';
+      }
+    }
+  });
+});
+
+// ── SMOOTH SCROLL ──
+document.querySelectorAll('a[href^="#"]').forEach(link => {
+  link.addEventListener('click', e => {
+    const target = document.querySelector(link.getAttribute('href'));
+    if (target) {
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth' });
+    }
+  });
+});
+</script>
+</body>
+</html>

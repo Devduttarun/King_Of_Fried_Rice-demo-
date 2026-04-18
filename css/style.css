@@ -1,0 +1,281 @@
+/* CSS RESET & BASE
+   Browsers have default styles that differ across Chrome, Safari, Firefox.
+   This wipes them out so you start from a clean slate. */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  /* box-sizing: border-box means padding and border are 
+     included in an element's width - makes layout math easier */
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  color: #1a1a1a;
+  line-height: 1.6;
+}
+
+/* CONTAINER
+   A centered wrapper with max width.
+   Stops content from stretching too wide on large screens. */
+.container {
+  max-width: 1100px;
+  margin: 0 auto;        /* centers it horizontally */
+  padding: 0 1.5rem;     /* breathing room on mobile */
+}
+
+/* NAVBAR */
+.navbar {
+  position: sticky;
+  top: 0;               /* sticks to top when scrolling */
+  background: #fff;
+  border-bottom: 1px solid #eee;
+  z-index: 100;         /* stays above all other content */
+  padding: 1rem 0;
+}
+
+.navbar .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  font-size: 1.2rem;
+  font-weight: 700;
+  text-decoration: none;
+  color: #c0392b;       /* red — food brands often use warm colours */
+}
+
+.nav-links {
+  display: flex;
+  list-style: none;     /* removes bullet points from <ul> */
+  gap: 2rem;
+  align-items: center;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #333;
+  font-size: 0.95rem;
+}
+
+.btn-nav {
+  background: #c0392b;
+  color: #fff !important;  /* !important overrides the general a colour */
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+}
+
+.menu-toggle {
+  display: none;        /* hidden on desktop, shown on mobile via media query */
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+/* HERO */
+.hero {
+  background: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)),
+              url('images/hero.jpg') center/cover no-repeat;
+  /* Two layers: a dark overlay + the background image.
+     The overlay makes white text readable over any photo. */
+  min-height: 90vh;     /* 90% of the screen height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #fff;
+}
+
+.hero-content h1 {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  /* clamp(min, preferred, max) — scales font size with screen width.
+     Never smaller than 2rem, never bigger than 3.5rem. */
+  margin-bottom: 1rem;
+}
+
+.hero-content p {
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+  opacity: 0.9;
+}
+
+.btn-primary {
+  background: #c0392b;
+  color: #fff;
+  padding: 0.8rem 2rem;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+/* SECTIONS - shared styles */
+section {
+  padding: 5rem 0;
+}
+
+h2 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+
+.section-sub {
+  text-align: center;
+  color: #666;
+  margin-bottom: 3rem;
+}
+
+/* MENU GRID
+   CSS Grid auto-fills columns that are at least 220px wide.
+   On wide screens: 4 columns. Mobile: 1 column. No media query needed. */
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+}
+
+.menu-card {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+  transition: transform 0.2s;
+  /* transition makes the hover effect smooth instead of instant */
+}
+
+.menu-card:hover {
+  transform: translateY(-4px);
+  /* lifts the card up slightly on hover — subtle, professional */
+}
+
+.menu-img {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.menu-card h3 {
+  margin-bottom: 0.5rem;
+}
+
+.menu-card p {
+  color: #666;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.price {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #c0392b;
+}
+
+/* ABOUT */
+.about {
+  background: #fdf6f0;  /* warm off-white — feels like food branding */
+  text-align: center;
+}
+
+.about p {
+  max-width: 650px;
+  margin: 1.5rem auto 0;
+  color: #444;
+}
+
+/* FIND US */
+.location-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.location-info p {
+  margin-bottom: 0.8rem;
+  font-size: 1rem;
+}
+
+.map-placeholder {
+  background: #eee;
+  border-radius: 12px;
+  min-height: 250px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #999;
+}
+
+/* CONTACT */
+.contact {
+  background: #c0392b;
+  color: #fff;
+  text-align: center;
+}
+
+.contact h2, .contact p {
+  color: #fff;
+}
+
+.contact p { margin: 0.5rem 0 2rem; }
+
+.btn-whatsapp {
+  background: #25D366;  /* official WhatsApp green */
+  color: #fff;
+  padding: 1rem 2.5rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+/* FOOTER */
+footer {
+  background: #1a1a1a;
+  color: #aaa;
+  text-align: center;
+  padding: 2rem;
+}
+
+.social-links {
+  margin-top: 0.8rem;
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.social-links a {
+  color: #aaa;
+  text-decoration: none;
+}
+
+/* MOBILE STYLES
+   Everything above is desktop. These rules only apply
+   when screen width is 768px or less (tablets and phones). */
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: block;     /* show hamburger button */
+  }
+
+  .nav-links {
+    display: none;      /* hide menu by default on mobile */
+    flex-direction: column;
+    position: absolute;
+    top: 65px;
+    left: 0;
+    right: 0;
+    background: #fff;
+    padding: 1rem;
+    border-bottom: 1px solid #eee;
+  }
+
+  .nav-links.open {
+    display: flex;      /* JS adds 'open' class when hamburger is tapped */
+  }
+
+  .location-grid {
+    grid-template-columns: 1fr;  /* stack map below info on mobile */
+  }
+}
