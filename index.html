@@ -7,15 +7,25 @@
   <meta name="description" content="King of Fried Rice – Singapore's favourite fried rice hawker chain. Wok hei perfected since 2018. Find us at multiple outlets across Singapore.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!--
+    PRELOAD: tells the browser to fetch this image at highest priority
+    before it even parses the rest of the page — no gray flash.
+  -->
+  <link rel="preload" as="image" href="https://images.deliveryhero.io/image/fd-sg/LH/erdb-hero.jpg?width=1200&quality=70">
+ 
   <style>
-    /* ── RESET ── */
+    /* ═══════════════════════════════════════
+       RESET
+    ═══════════════════════════════════════ */
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; }
     body { font-family: 'Inter', sans-serif; color: #1a1a1a; line-height: 1.6; }
     a { text-decoration: none; color: inherit; }
     img { display: block; max-width: 100%; }
-
-    /* ── VARIABLES ── */
+ 
+    /* ═══════════════════════════════════════
+       CSS VARIABLES
+    ═══════════════════════════════════════ */
     :root {
       --red: #c0392b;
       --red-dark: #a93226;
@@ -25,46 +35,54 @@
       --border: #eee;
       --radius: 12px;
     }
-
-    /* ── CONTAINER ── */
+ 
+    /* ═══════════════════════════════════════
+       LAYOUT
+    ═══════════════════════════════════════ */
     .container { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; }
-
-    /* ── NAVBAR ── */
+    section { padding: 5rem 0; }
+    .section-title { font-size: 2rem; font-weight: 700; text-align: center; margin-bottom: 0.5rem; }
+    .section-sub { text-align: center; color: var(--text-muted); margin-bottom: 3rem; }
+ 
+    /* ═══════════════════════════════════════
+       NAVBAR
+    ═══════════════════════════════════════ */
     .navbar {
       position: sticky; top: 0; background: #fff;
       border-bottom: 1px solid var(--border);
       z-index: 100; padding: 1rem 0;
     }
     .navbar .container { display: flex; align-items: center; justify-content: space-between; }
-    .logo { font-size: 1.15rem; font-weight: 700; color: var(--red); display: flex; align-items: center; gap: 0.4rem; }
+    .logo { font-size: 1.15rem; font-weight: 700; color: var(--red); }
     .nav-links { display: flex; list-style: none; gap: 2rem; align-items: center; }
     .nav-links a { color: #333; font-size: 0.95rem; transition: color 0.2s; }
     .nav-links a:hover { color: var(--red); }
-    .btn-nav {
-      background: var(--red); color: #fff !important;
-      padding: 0.5rem 1.1rem; border-radius: 6px;
-      font-weight: 500;
-    }
+    .btn-nav { background: var(--red); color: #fff !important; padding: 0.5rem 1.1rem; border-radius: 6px; font-weight: 500; }
     .btn-nav:hover { background: var(--red-dark) !important; }
     .menu-toggle { display: none; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #333; }
-
-    /* ── HERO WITH SLIDER ── */
+ 
+    /* ═══════════════════════════════════════
+       HERO SLIDER
+       FIX: background:#2c1a0e shows instantly
+       before the CDN image arrives so there
+       is never a blank/gray flash.
+       First slide has class="active" in HTML
+       so it is visible before JS runs at all.
+    ═══════════════════════════════════════ */
     .hero {
       position: relative; min-height: 92vh;
       display: flex; align-items: center; justify-content: center;
       overflow: hidden; text-align: center; color: #fff;
+      background: #2c1a0e;
     }
     .hero-slides { position: absolute; inset: 0; z-index: 0; }
     .hero-slide {
       position: absolute; inset: 0;
       background-size: cover; background-position: center;
-      transition: opacity 1s ease;
+      transition: opacity 0.8s ease;
       opacity: 0;
     }
-    .hero-slide::after {
-      content: ''; position: absolute; inset: 0;
-      background: rgba(0,0,0,0.52);
-    }
+    .hero-slide::after { content: ''; position: absolute; inset: 0; background: rgba(0,0,0,0.50); }
     .hero-slide.active { opacity: 1; }
     .hero-content { position: relative; z-index: 1; max-width: 700px; padding: 0 1rem; }
     .hero-badge {
@@ -72,148 +90,113 @@
       padding: 0.3rem 1rem; border-radius: 20px; font-size: 0.85rem;
       font-weight: 600; margin-bottom: 1rem; letter-spacing: 0.03em;
     }
-    .hero-content h1 {
-      font-size: clamp(2rem, 5vw, 3.5rem);
-      font-weight: 700; margin-bottom: 1rem; line-height: 1.15;
-    }
+    .hero-content h1 { font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 700; margin-bottom: 1rem; line-height: 1.15; }
     .hero-content p { font-size: 1.1rem; opacity: 0.9; margin-bottom: 2rem; }
     .hero-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
-    .btn-primary {
-      background: var(--red); color: #fff;
-      padding: 0.85rem 2rem; border-radius: 8px;
-      font-weight: 600; font-size: 1rem;
-      transition: background 0.2s;
-    }
+    .btn-primary { background: var(--red); color: #fff; padding: 0.85rem 2rem; border-radius: 8px; font-weight: 600; font-size: 1rem; transition: background 0.2s; }
     .btn-primary:hover { background: var(--red-dark); }
-    .btn-outline {
-      background: transparent; color: #fff;
-      padding: 0.85rem 2rem; border-radius: 8px;
-      font-weight: 600; font-size: 1rem;
-      border: 2px solid rgba(255,255,255,0.7);
-      transition: background 0.2s;
-    }
+    .btn-outline { background: transparent; color: #fff; padding: 0.85rem 2rem; border-radius: 8px; font-weight: 600; font-size: 1rem; border: 2px solid rgba(255,255,255,0.7); transition: background 0.2s; }
     .btn-outline:hover { background: rgba(255,255,255,0.15); }
-    /* Slide dots */
-    .hero-dots {
-      position: absolute; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
-      display: flex; gap: 8px; z-index: 2;
-    }
-    .dot {
-      width: 8px; height: 8px; border-radius: 50%;
-      background: rgba(255,255,255,0.45); cursor: pointer;
-      transition: background 0.3s;
-    }
+    .hero-dots { position: absolute; bottom: 1.5rem; left: 50%; transform: translateX(-50%); display: flex; gap: 8px; z-index: 2; }
+    .dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.45); cursor: pointer; border: none; transition: background 0.3s; }
     .dot.active { background: #fff; }
-
-    /* ── STATS STRIP ── */
+ 
+    /* ═══════════════════════════════════════
+       STATS STRIP
+    ═══════════════════════════════════════ */
     .stats-strip { background: var(--red); color: #fff; padding: 1.2rem 0; }
     .stats-strip .container { display: flex; justify-content: space-around; flex-wrap: wrap; gap: 1rem; text-align: center; }
     .stat-item strong { display: block; font-size: 1.6rem; font-weight: 700; }
     .stat-item span { font-size: 0.85rem; opacity: 0.85; }
-
-    /* ── SECTIONS ── */
-    section { padding: 5rem 0; }
-    .section-title { font-size: 2rem; font-weight: 700; text-align: center; margin-bottom: 0.5rem; }
-    .section-sub { text-align: center; color: var(--text-muted); margin-bottom: 3rem; }
-
-    /* ── MENU TABS ── */
+ 
+    /* ═══════════════════════════════════════
+       MENU SECTION
+       Dark charcoal background makes food
+       cards pop like a restaurant menu board.
+    ═══════════════════════════════════════ */
+    #menu {
+      background: linear-gradient(160deg, #1a0a00 0%, #2d1200 40%, #1a0a00 100%);
+      position: relative;
+    }
+    #menu .section-title { color: #fff; }
+    #menu .section-sub { color: rgba(255,255,255,0.65); }
     .menu-tabs { display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; margin-bottom: 2.5rem; }
     .tab-btn {
-      padding: 0.5rem 1.2rem; border-radius: 20px; border: 1.5px solid var(--border);
-      background: #fff; cursor: pointer; font-size: 0.9rem; font-weight: 500;
-      color: #555; transition: all 0.2s; font-family: inherit;
+      padding: 0.5rem 1.2rem; border-radius: 20px;
+      border: 1.5px solid rgba(255,255,255,0.2);
+      background: rgba(255,255,255,0.08); cursor: pointer; font-size: 0.9rem;
+      font-weight: 500; color: rgba(255,255,255,0.8);
+      transition: all 0.2s; font-family: inherit;
     }
     .tab-btn.active, .tab-btn:hover { background: var(--red); color: #fff; border-color: var(--red); }
-
-    /* ── MENU GRID ── */
-    .menu-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-      gap: 1.4rem;
-    }
-    .menu-card {
-      background: #fff; border: 1px solid var(--border);
-      border-radius: var(--radius); overflow: hidden;
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .menu-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
-    .menu-card-img {
-      width: 100%; height: 170px; object-fit: cover;
-      background: #f5f5f5;
-    }
+    .menu-cat { display: none; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.4rem; }
+    .menu-cat.visible { display: grid; }
+    .menu-card { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; transition: transform 0.2s, box-shadow 0.2s; }
+    .menu-card:hover { transform: translateY(-5px); box-shadow: 0 12px 30px rgba(0,0,0,0.2); }
+    .menu-card-img { width: 100%; height: 170px; object-fit: cover; background: #222; }
     .menu-card-body { padding: 1rem; }
     .menu-card-body h3 { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.35rem; }
     .menu-card-body p { color: var(--text-muted); font-size: 0.82rem; margin-bottom: 0.75rem; line-height: 1.5; }
     .menu-card-footer { display: flex; align-items: center; justify-content: space-between; }
     .price { font-size: 1.1rem; font-weight: 700; color: var(--red); }
-    .badge {
-      font-size: 0.72rem; font-weight: 600;
-      padding: 2px 8px; border-radius: 10px;
-    }
+    .badge { font-size: 0.72rem; font-weight: 600; padding: 2px 8px; border-radius: 10px; }
     .badge-popular { background: #fff3cd; color: #856404; }
     .badge-top { background: #d4edda; color: #155724; }
     .badge-new { background: #cfe2ff; color: #084298; }
-    .menu-cat { display: none; }
-    .menu-cat.visible { display: grid; }
-
-    /* ── ABOUT ── */
+ 
+    /* ═══════════════════════════════════════
+       ABOUT
+    ═══════════════════════════════════════ */
     .about { background: var(--bg-warm); }
-    .about-inner {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 4rem; align-items: center;
-    }
+    .about-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
     .about-text h2 { font-size: 2rem; font-weight: 700; margin-bottom: 1.2rem; }
     .about-text p { color: #444; margin-bottom: 1rem; }
-    .about-text blockquote {
-      border-left: 4px solid var(--red);
-      padding-left: 1rem; margin: 1.5rem 0;
-      font-style: italic; color: #555; font-size: 1.05rem;
-    }
+    .about-text blockquote { border-left: 4px solid var(--red); padding-left: 1rem; margin: 1.5rem 0; font-style: italic; color: #555; font-size: 1.05rem; }
     .about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 2rem; }
     .about-stat { background: #fff; border-radius: 10px; padding: 1rem; text-align: center; border: 1px solid var(--border); }
     .about-stat strong { display: block; font-size: 1.5rem; color: var(--red); font-weight: 700; }
     .about-stat span { font-size: 0.82rem; color: var(--text-muted); }
     .about-img img { width: 100%; border-radius: var(--radius); }
-
-    /* ── FIND US ── */
-    .locations-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 1.5rem; margin-bottom: 3rem;
-    }
-    .location-card {
-      background: #fff; border: 1px solid var(--border);
-      border-radius: var(--radius); padding: 1.5rem;
-    }
-    .location-card h3 { font-size: 1rem; font-weight: 600; margin-bottom: 0.75rem; color: var(--red); }
-    .location-card p { font-size: 0.9rem; color: #444; margin-bottom: 0.4rem; }
-    .map-embed { border-radius: var(--radius); overflow: hidden; }
-    .map-embed iframe { width: 100%; height: 350px; border: 0; }
-
-    /* ── REVIEWS ── */
+ 
+    /* ═══════════════════════════════════════
+       REVIEWS
+    ═══════════════════════════════════════ */
     .reviews { background: var(--bg-warm); }
     .reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; }
     .review-card { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; }
     .review-stars { color: var(--gold); font-size: 1rem; margin-bottom: 0.5rem; }
     .review-text { font-size: 0.9rem; color: #444; font-style: italic; margin-bottom: 1rem; }
     .review-author { font-size: 0.85rem; font-weight: 600; color: var(--text-muted); }
-
-    /* ── ORDER CTA ── */
+ 
+    /* ═══════════════════════════════════════
+       FIND US / MAP
+       FIX: old embed URL caused Vercel 404.
+       Use maps.google.com/maps?q=...&output=embed
+       OR paste the <iframe> from Google Maps
+       Share → Embed a map directly here.
+    ═══════════════════════════════════════ */
+    .locations-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; margin-bottom: 3rem; }
+    .location-card { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; }
+    .location-card h3 { font-size: 1rem; font-weight: 600; margin-bottom: 0.75rem; color: var(--red); }
+    .location-card p { font-size: 0.9rem; color: #444; margin-bottom: 0.4rem; }
+    .map-embed { border-radius: var(--radius); overflow: hidden; }
+    .map-embed iframe { width: 100%; height: 380px; border: 0; }
+ 
+    /* ═══════════════════════════════════════
+       ORDER CTA
+    ═══════════════════════════════════════ */
     .order-cta { background: var(--red); color: #fff; text-align: center; }
     .order-cta h2 { color: #fff; margin-bottom: 0.75rem; }
     .order-cta p { opacity: 0.9; margin-bottom: 2rem; }
     .order-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
-    .btn-whatsapp {
-      background: #25D366; color: #fff;
-      padding: 1rem 2.5rem; border-radius: 8px;
-      font-weight: 600; font-size: 1rem; display: inline-flex; align-items: center; gap: 0.5rem;
-    }
-    .btn-foodpanda {
-      background: #fff; color: var(--red);
-      padding: 1rem 2.5rem; border-radius: 8px;
-      font-weight: 600; font-size: 1rem;
-    }
-
-    /* ── FOOTER ── */
+    .btn-whatsapp { background: #25D366; color: #fff; padding: 1rem 2.5rem; border-radius: 8px; font-weight: 600; font-size: 1rem; display: inline-flex; align-items: center; gap: 0.5rem; transition: opacity 0.2s; }
+    .btn-whatsapp:hover { opacity: 0.9; }
+    .btn-foodpanda { background: #fff; color: var(--red); padding: 1rem 2.5rem; border-radius: 8px; font-weight: 600; font-size: 1rem; transition: opacity 0.2s; }
+    .btn-foodpanda:hover { opacity: 0.85; }
+ 
+    /* ═══════════════════════════════════════
+       FOOTER
+    ═══════════════════════════════════════ */
     footer { background: #1a1a1a; color: #aaa; padding: 2.5rem 0; }
     .footer-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
     .footer-brand { font-size: 1.1rem; font-weight: 700; color: var(--red); }
@@ -221,22 +204,30 @@
     .social-links a { color: #aaa; font-size: 0.9rem; transition: color 0.2s; }
     .social-links a:hover { color: #fff; }
     .footer-copy { font-size: 0.85rem; }
-
-    /* ── MOBILE ── */
+ 
+    /* ═══════════════════════════════════════
+       MOBILE
+    ═══════════════════════════════════════ */
     @media (max-width: 768px) {
       .menu-toggle { display: block; }
-      .nav-links { display: none; flex-direction: column; position: absolute; top: 65px; left: 0; right: 0; background: #fff; padding: 1rem; border-bottom: 1px solid var(--border); z-index: 99; }
+      .nav-links {
+        display: none; flex-direction: column;
+        position: absolute; top: 65px; left: 0; right: 0;
+        background: #fff; padding: 1rem;
+        border-bottom: 1px solid var(--border); z-index: 99;
+      }
       .nav-links.open { display: flex; }
       .about-inner { grid-template-columns: 1fr; }
       .about-img { order: -1; }
       .footer-inner { flex-direction: column; text-align: center; }
-      .stats-strip .container { gap: 1.5rem; }
     }
   </style>
 </head>
 <body>
-
-<!-- NAVBAR -->
+ 
+<!-- ═══════════════════════════════════════
+     NAVBAR
+═══════════════════════════════════════ -->
 <nav class="navbar">
   <div class="container">
     <a href="#" class="logo">🍳 King of Fried Rice</a>
@@ -249,16 +240,19 @@
     </ul>
   </div>
 </nav>
-
-<!-- HERO SLIDER -->
+ 
+<!-- ═══════════════════════════════════════
+     HERO SLIDER
+     NOTE: First slide has class="active" in
+     the HTML itself — visible before JS runs.
+═══════════════════════════════════════ -->
 <section class="hero">
   <div class="hero-slides" id="heroSlides">
-    <!-- Images are real product photos from deliveryhero -->
-    <div class="hero-slide active" style="background-image: url('https://images.deliveryhero.io/image/fd-sg/LH/erdb-hero.jpg?width=1200&quality=70')"></div>
-    <div class="hero-slide" style="background-image: url('https://images.deliveryhero.io/image/fd-sg/Products/16329994.jpg?width=900&height=600')"></div>
-    <div class="hero-slide" style="background-image: url('https://images.deliveryhero.io/image/fd-sg/Products/16329995.jpg?width=900&height=600')"></div>
-    <div class="hero-slide" style="background-image: url('https://images.deliveryhero.io/image/fd-sg/Products/41918837.jpg?width=900&height=600')"></div>
-    <div class="hero-slide" style="background-image: url('https://images.deliveryhero.io/image/fd-sg/Products/16329981.jpg?width=900&height=600')"></div>
+    <div class="hero-slide active" style="background-image:url('https://images.deliveryhero.io/image/fd-sg/LH/erdb-hero.jpg?width=1200&quality=70')"></div>
+    <div class="hero-slide" style="background-image:url('https://images.deliveryhero.io/image/fd-sg/Products/16329994.jpg?width=900&height=600')"></div>
+    <div class="hero-slide" style="background-image:url('https://images.deliveryhero.io/image/fd-sg/Products/16329995.jpg?width=900&height=600')"></div>
+    <div class="hero-slide" style="background-image:url('https://images.deliveryhero.io/image/fd-sg/Products/41918837.jpg?width=900&height=600')"></div>
+    <div class="hero-slide" style="background-image:url('https://images.deliveryhero.io/image/fd-sg/Products/16329981.jpg?width=900&height=600')"></div>
   </div>
   <div class="hero-content">
     <div class="hero-badge">⭐ 4.9 Rating · 20+ Outlets Across Singapore</div>
@@ -271,7 +265,7 @@
   </div>
   <div class="hero-dots" id="heroDots"></div>
 </section>
-
+ 
 <!-- STATS STRIP -->
 <div class="stats-strip">
   <div class="container">
@@ -281,13 +275,15 @@
     <div class="stat-item"><strong>Daily</strong><span>10:30am – 9:00pm</span></div>
   </div>
 </div>
-
-<!-- MENU -->
+ 
+<!-- ═══════════════════════════════════════
+     MENU
+═══════════════════════════════════════ -->
 <section id="menu">
   <div class="container">
     <h2 class="section-title">Our Menu</h2>
     <p class="section-sub">Every plate cooked fresh to order with premium Japanese rice</p>
-
+ 
     <div class="menu-tabs">
       <button class="tab-btn active" data-cat="all">All</button>
       <button class="tab-btn" data-cat="egg">Egg Fried Rice</button>
@@ -297,79 +293,62 @@
       <button class="tab-btn" data-cat="special">Limited Offer</button>
       <button class="tab-btn" data-cat="snacks">Snacks</button>
     </div>
-
+ 
     <!-- EGG FRIED RICE -->
-    <div class="menu-cat visible" id="cat-egg" style="grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.4rem;">
-      <div class="menu-card" data-cat="egg">
+    <div class="menu-cat visible" id="cat-egg">
+      <div class="menu-card">
         <img class="menu-card-img" src="https://images.deliveryhero.io/image/fd-sg/Products/16329981.jpg?width=400&height=280" alt="Egg Fried Rice" loading="lazy">
         <div class="menu-card-body">
           <h3>1A. Egg Fried Rice 蛋炒饭</h3>
           <p>Fluffy and savoury golden egg fried rice.</p>
-          <div class="menu-card-footer">
-            <span class="price">from S$6.60</span>
-            <span class="badge badge-top">#1 Most Liked</span>
-          </div>
+          <div class="menu-card-footer"><span class="price">from S$6.60</span><span class="badge badge-top">#1 Most Liked</span></div>
         </div>
       </div>
-      <div class="menu-card" data-cat="egg">
+      <div class="menu-card">
         <img class="menu-card-img" src="https://images.deliveryhero.io/image/fd-sg/Products/16329983.jpg?width=400&height=280" alt="Shrimp Egg Fried Rice" loading="lazy">
         <div class="menu-card-body">
           <h3>1B. Shrimp Egg Fried Rice 虾蛋炒饭</h3>
           <p>Stir-fried fluffy egg fried rice topped with shrimp.</p>
-          <div class="menu-card-footer">
-            <span class="price">from S$9.10</span>
-            <span class="badge badge-popular">Popular</span>
-          </div>
+          <div class="menu-card-footer"><span class="price">from S$9.10</span><span class="badge badge-popular">Popular</span></div>
         </div>
       </div>
-      <div class="menu-card" data-cat="egg">
+      <div class="menu-card">
         <img class="menu-card-img" src="https://images.deliveryhero.io/image/fd-sg/Products/16329982.jpg?width=400&height=280" alt="Pork Cutlet Egg Fried Rice" loading="lazy">
         <div class="menu-card-body">
           <h3>1C. Pork Cutlet Egg Fried Rice 猪扒蛋炒饭</h3>
           <p>Fluffy egg fried rice served with crispy pork cutlet.</p>
-          <div class="menu-card-footer">
-            <span class="price">from S$9.10</span>
-            <span class="badge badge-popular">Popular</span>
-          </div>
+          <div class="menu-card-footer"><span class="price">from S$9.10</span><span class="badge badge-popular">Popular</span></div>
         </div>
       </div>
-      <div class="menu-card" data-cat="egg">
+      <div class="menu-card">
         <img class="menu-card-img" src="https://images.deliveryhero.io/image/fd-sg/Products/16329984.jpg?width=400&height=280" alt="Crab Meat Tobiko Egg Fried Rice" loading="lazy">
         <div class="menu-card-body">
           <h3>1D. Crab Meat &amp; Tobiko Egg Fried Rice 蟹肉鱼卵蛋炒饭</h3>
           <p>Golden egg fried rice topped with crabmeat and tobiko.</p>
-          <div class="menu-card-footer">
-            <span class="price">from S$12.90</span>
-          </div>
+          <div class="menu-card-footer"><span class="price">from S$12.90</span></div>
         </div>
       </div>
-      <div class="menu-card" data-cat="egg">
+      <div class="menu-card">
         <img class="menu-card-img" src="https://images.deliveryhero.io/image/fd-sg/Products/36419300.jpg?width=400&height=280" alt="Chicken Chop Egg Fried Rice" loading="lazy">
         <div class="menu-card-body">
           <h3>1E. Chicken Chop Egg Fried Rice 鸡扒蛋炒饭</h3>
           <p>Fluffy golden egg fried rice served with chicken chop.</p>
-          <div class="menu-card-footer">
-            <span class="price">from S$9.10</span>
-            <span class="badge badge-popular">Popular</span>
-          </div>
+          <div class="menu-card-footer"><span class="price">from S$9.10</span><span class="badge badge-popular">Popular</span></div>
         </div>
       </div>
-      <div class="menu-card" data-cat="egg">
+      <div class="menu-card">
         <img class="menu-card-img" src="https://images.deliveryhero.io/image/fd-sg/Products/24247322.jpg?width=400&height=280" alt="Luncheon Meat Egg Fried Rice" loading="lazy">
         <div class="menu-card-body">
           <h3>1F. Luncheon Meat Egg Fried Rice</h3>
           <p>Fluffy golden egg fried rice served with luncheon meat.</p>
-          <div class="menu-card-footer">
-            <span class="price">from S$8.90</span>
-            <span class="badge badge-popular">Popular</span>
-          </div>
+          <div class="menu-card-footer"><span class="price">from S$8.90</span><span class="badge badge-popular">Popular</span></div>
         </div>
       </div>
     </div>
-
+ 
     <!-- XO FRIED RICE -->
-    <div class="menu-cat" id="cat-xo" style="grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.4rem;">
-      <div class="menu-card" data-cat="xo">
+    <div class="menu-cat" id="cat-xo">
+      <div class="menu-card">
         <img class="menu-card-img" src="https://images.deliveryhero.io/image/fd-sg/Products/16329985.jpg?width=400&height=280" alt="XO Fried Rice" loading="lazy">
         <div class="menu-card-body">
           <h3>2A. XO Fried Rice XO炒饭</h3>
@@ -377,7 +356,7 @@
           <div class="menu-card-footer"><span class="price">from S$8.10</span></div>
         </div>
       </div>
-      <div class="menu-card" data-cat="xo">
+      <div class="menu-card">
         <img class="menu-card-img" src="https://images.deliveryhero.io/image/fd-sg/Products/16329987.jpg?width=400&height=280" alt="Shrimp XO Fried Rice" loading="lazy">
         <div class="menu-card-body">
           <h3>2B. Shrimp XO Fried Rice 虾XO炒饭</h3>
@@ -385,38 +364,32 @@
           <div class="menu-card-footer"><span class="price">from S$10.60</span></div>
         </div>
       </div>
-      <div class="menu-card" data-cat="xo">
+      <div class="menu-card">
         <img class="menu-card-img" src="https://images.deliveryhero.io/image/fd-sg/Products/16329986.jpg?width=400&height=280" alt="Pork Cutlet XO Fried Rice" loading="lazy">
         <div class="menu-card-body">
           <h3>2C. Pork Cutlet XO Fried Rice 猪扒XO炒饭</h3>
           <p>Stir-fried fluffy XO fried rice served with crispy pork cutlet.</p>
-          <div class="menu-card-footer">
-            <span class="price">from S$10.60</span>
-            <span class="badge badge-popular">Popular</span>
-          </div>
+          <div class="menu-card-footer"><span class="price">from S$10.60</span><span class="badge badge-popular">Popular</span></div>
         </div>
       </div>
-      <div class="menu-card" data-cat="xo">
-        <img class="menu-card-img" src="https://images.deliveryhero.io/image/fd-sg/Products/16329988.jpg?width=400&height=280" alt="Crab Meat Tobiko XO Fried Rice" loading="lazy">
+      <div class="menu-card">
+        <img class="menu-card-img" src="https://images.deliveryhero.io/image/fd-sg/Products/16329988.jpg?width=400&height=280" alt="Crab Meat XO Fried Rice" loading="lazy">
         <div class="menu-card-body">
           <h3>2D. Crab Meat &amp; Tobiko XO Fried Rice 蟹肉鱼卵XO炒饭</h3>
           <p>Stir-fried fluffy golden XO fried rice topped with crabmeat and tobiko.</p>
           <div class="menu-card-footer"><span class="price">from S$14.30</span></div>
         </div>
       </div>
-      <div class="menu-card" data-cat="xo">
+      <div class="menu-card">
         <img class="menu-card-img" src="https://images.deliveryhero.io/image/fd-sg/Products/36419301.jpg?width=400&height=280" alt="Chicken Chop XO Fried Rice" loading="lazy">
         <div class="menu-card-body">
           <h3>2E. Chicken Chop XO Fried Rice 鸡扒XO炒饭</h3>
           <p>Stir-fried fluffy golden XO fried rice served with chicken chop.</p>
-          <div class="menu-card-footer">
-            <span class="price">from S$10.60</span>
-            <span class="badge badge-popular">Popular</span>
-          </div>
+          <div class="menu-card-footer"><span class="price">from S$10.60</span><span class="badge badge-popular">Popular</span></div>
         </div>
       </div>
-      <div class="menu-card" data-cat="xo">
-        <img class="menu-card-img" src="https://images.deliveryhero.io/image/fd-sg/Products/24248533.jpg?width=400&height=280" alt="Luncheon Meat XO Egg Fried Rice" loading="lazy">
+      <div class="menu-card">
+        <img class="menu-card-img" src="https://images.deliveryhero.io/image/fd-sg/Products/24248533.jpg?width=400&height=280" alt="Luncheon Meat XO Fried Rice" loading="lazy">
         <div class="menu-card-body">
           <h3>2F. Luncheon Meat XO Egg Fried Rice</h3>
           <p>Stir-fried fluffy XO fried rice served with flavourful luncheon meat.</p>
@@ -424,10 +397,10 @@
         </div>
       </div>
     </div>
-
+ 
     <!-- TOM YUM -->
-    <div class="menu-cat" id="cat-tomyum" style="grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.4rem;">
-      <div class="menu-card" data-cat="tomyum">
+    <div class="menu-cat" id="cat-tomyum">
+      <div class="menu-card">
         <img class="menu-card-img" src="https://images.deliveryhero.io/image/fd-sg/Products/16329989.jpg?width=400&height=280" alt="Tom Yum Fried Rice" loading="lazy">
         <div class="menu-card-body">
           <h3>3A. Tom Yum Fried Rice 冬炎炒饭</h3>
@@ -435,7 +408,7 @@
           <div class="menu-card-footer"><span class="price">from S$7.60</span></div>
         </div>
       </div>
-      <div class="menu-card" data-cat="tomyum">
+      <div class="menu-card">
         <img class="menu-card-img" src="https://images.deliveryhero.io/image/fd-sg/Products/16329991.jpg?width=400&height=280" alt="Shrimp Tom Yum Fried Rice" loading="lazy">
         <div class="menu-card-body">
           <h3>3B. Shrimp Tom Yum Fried Rice 虾冬炎炒饭</h3>
@@ -443,7 +416,7 @@
           <div class="menu-card-footer"><span class="price">from S$10.10</span></div>
         </div>
       </div>
-      <div class="menu-card" data-cat="tomyum">
+      <div class="menu-card">
         <img class="menu-card-img" src="https://images.deliveryhero.io/image/fd-sg/Products/16329990.jpg?width=400&height=280" alt="Pork Cutlet Tom Yum Fried Rice" loading="lazy">
         <div class="menu-card-body">
           <h3>3C. Pork Cutlet Tom Yum Fried Rice 猪扒冬炎炒饭</h3>
@@ -451,7 +424,7 @@
           <div class="menu-card-footer"><span class="price">from S$10.10</span></div>
         </div>
       </div>
-      <div class="menu-card" data-cat="tomyum">
+      <div class="menu-card">
         <img class="menu-card-img" src="https://images.deliveryhero.io/image/fd-sg/Products/16329992.jpg?width=400&height=280" alt="Crab Meat Tom Yum Fried Rice" loading="lazy">
         <div class="menu-card-body">
           <h3>3D. Crab Meat &amp; Tobiko Tom Yum Fried Rice 蟹肉鱼卵冬炎炒饭</h3>
@@ -459,7 +432,7 @@
           <div class="menu-card-footer"><span class="price">from S$13.90</span></div>
         </div>
       </div>
-      <div class="menu-card" data-cat="tomyum">
+      <div class="menu-card">
         <img class="menu-card-img" src="https://images.deliveryhero.io/image/fd-sg/Products/36419302.jpg?width=400&height=280" alt="Chicken Chop Tom Yum Fried Rice" loading="lazy">
         <div class="menu-card-body">
           <h3>3E. Chicken Chop Tom Yum Fried Rice 鸡扒冬炎炒饭</h3>
@@ -467,8 +440,8 @@
           <div class="menu-card-footer"><span class="price">from S$10.10</span></div>
         </div>
       </div>
-      <div class="menu-card" data-cat="tomyum">
-        <img class="menu-card-img" src="https://images.deliveryhero.io/image/fd-sg/Products/24248147.jpg?width=400&height=280" alt="Luncheon Meat Tom Yum Egg Fried Rice" loading="lazy">
+      <div class="menu-card">
+        <img class="menu-card-img" src="https://images.deliveryhero.io/image/fd-sg/Products/24248147.jpg?width=400&height=280" alt="Luncheon Meat Tom Yum Fried Rice" loading="lazy">
         <div class="menu-card-body">
           <h3>3F. Luncheon Meat Tom Yum Egg Fried Rice</h3>
           <p>Stir-fried fluffy golden tom yum fried rice served with luncheon meat.</p>
@@ -476,10 +449,10 @@
         </div>
       </div>
     </div>
-
+ 
     <!-- MALA -->
-    <div class="menu-cat" id="cat-mala" style="grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.4rem;">
-      <div class="menu-card" data-cat="mala">
+    <div class="menu-cat" id="cat-mala">
+      <div class="menu-card">
         <img class="menu-card-img" src="https://images.deliveryhero.io/image/fd-sg/Products/16329993.jpg?width=400&height=280" alt="Mala Fried Rice" loading="lazy">
         <div class="menu-card-body">
           <h3>4A. Mala Fried Rice 麻辣炒饭</h3>
@@ -487,37 +460,31 @@
           <div class="menu-card-footer"><span class="price">from S$7.60</span></div>
         </div>
       </div>
-      <div class="menu-card" data-cat="mala">
+      <div class="menu-card">
         <img class="menu-card-img" src="https://images.deliveryhero.io/image/fd-sg/Products/16329995.jpg?width=400&height=280" alt="Shrimp Mala Fried Rice" loading="lazy">
         <div class="menu-card-body">
           <h3>4B. Shrimp Mala Fried Rice 虾麻辣炒饭</h3>
           <p>Stir-fried fluffy mala fried rice topped with shrimp.</p>
-          <div class="menu-card-footer">
-            <span class="price">from S$10.10</span>
-            <span class="badge badge-top">#2 Most Liked</span>
-          </div>
+          <div class="menu-card-footer"><span class="price">from S$10.10</span><span class="badge badge-top">#2 Most Liked</span></div>
         </div>
       </div>
-      <div class="menu-card" data-cat="mala">
+      <div class="menu-card">
         <img class="menu-card-img" src="https://images.deliveryhero.io/image/fd-sg/Products/16329994.jpg?width=400&height=280" alt="Pork Cutlet Mala Fried Rice" loading="lazy">
         <div class="menu-card-body">
           <h3>4C. Pork Cutlet Mala Fried Rice 猪扒麻辣炒饭</h3>
           <p>Stir-fried fluffy mala fried rice served with crispy pork cutlet.</p>
-          <div class="menu-card-footer">
-            <span class="price">from S$10.10</span>
-            <span class="badge badge-top">#3 Most Liked</span>
-          </div>
+          <div class="menu-card-footer"><span class="price">from S$10.10</span><span class="badge badge-top">#3 Most Liked</span></div>
         </div>
       </div>
-      <div class="menu-card" data-cat="mala">
-        <img class="menu-card-img" src="https://images.deliveryhero.io/image/fd-sg/Products/16329996.jpg?width=400&height=280" alt="Crab Meat Tobiko Mala Fried Rice" loading="lazy">
+      <div class="menu-card">
+        <img class="menu-card-img" src="https://images.deliveryhero.io/image/fd-sg/Products/16329996.jpg?width=400&height=280" alt="Crab Meat Mala Fried Rice" loading="lazy">
         <div class="menu-card-body">
           <h3>4D. Crab Meat &amp; Tobiko Mala Fried Rice 蟹肉鱼卵麻辣炒饭</h3>
           <p>Stir-fried fluffy golden mala fried rice topped with crabmeat and tobiko.</p>
           <div class="menu-card-footer"><span class="price">from S$13.90</span></div>
         </div>
       </div>
-      <div class="menu-card" data-cat="mala">
+      <div class="menu-card">
         <img class="menu-card-img" src="https://images.deliveryhero.io/image/fd-sg/Products/36419303.jpg?width=400&height=280" alt="Chicken Chop Mala Fried Rice" loading="lazy">
         <div class="menu-card-body">
           <h3>4E. Chicken Chop Mala Fried Rice 鸡扒麻辣炒饭</h3>
@@ -525,8 +492,8 @@
           <div class="menu-card-footer"><span class="price">from S$10.10</span></div>
         </div>
       </div>
-      <div class="menu-card" data-cat="mala">
-        <img class="menu-card-img" src="https://images.deliveryhero.io/image/fd-sg/Products/24248148.jpg?width=400&height=280" alt="Luncheon Meat Mala Egg Fried Rice" loading="lazy">
+      <div class="menu-card">
+        <img class="menu-card-img" src="https://images.deliveryhero.io/image/fd-sg/Products/24248148.jpg?width=400&height=280" alt="Luncheon Meat Mala Fried Rice" loading="lazy">
         <div class="menu-card-body">
           <h3>4F. Luncheon Meat Mala Egg Fried Rice</h3>
           <p>Stir-fried fluffy golden mala fried rice served with luncheon meat.</p>
@@ -534,58 +501,46 @@
         </div>
       </div>
     </div>
-
-    <!-- LIMITED OFFER -->
-    <div class="menu-cat" id="cat-special" style="grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.4rem;">
-      <div class="menu-card" data-cat="special">
+ 
+    <!-- LIMITED TIME OFFER -->
+    <div class="menu-cat" id="cat-special">
+      <div class="menu-card">
         <img class="menu-card-img" src="https://images.deliveryhero.io/image/fd-sg/Products/41918837.jpg?width=400&height=280" alt="Streaky Bacon Egg Fried Rice" loading="lazy">
         <div class="menu-card-body">
           <h3>5G. Streaky Bacon Egg Fried Rice 培根蛋炒饭</h3>
           <p>Premium Japanese rice, fragrant umami bacon, fluffy eggs topped with spring onions.</p>
-          <div class="menu-card-footer">
-            <span class="price">from S$9.10</span>
-            <span class="badge badge-top">#4 Most Liked</span>
-          </div>
+          <div class="menu-card-footer"><span class="price">from S$9.10</span><span class="badge badge-top">#4 Most Liked</span></div>
         </div>
       </div>
-      <div class="menu-card" data-cat="special">
+      <div class="menu-card">
         <img class="menu-card-img" src="https://images.deliveryhero.io/image/fd-sg/Products/41918846.jpg?width=400&height=280" alt="Streaky Bacon XO Egg Fried Rice" loading="lazy">
         <div class="menu-card-body">
           <h3>5G. Streaky Bacon XO Egg Fried Rice 培根XO蛋炒饭</h3>
           <p>Bacon fried rice with Taiwanese XO sauce — aromatic, smoky, salty and umami.</p>
-          <div class="menu-card-footer">
-            <span class="price">from S$10.60</span>
-            <span class="badge badge-new">Limited Time</span>
-          </div>
+          <div class="menu-card-footer"><span class="price">from S$10.60</span><span class="badge badge-new">Limited Time</span></div>
         </div>
       </div>
-      <div class="menu-card" data-cat="special">
+      <div class="menu-card">
         <img class="menu-card-img" src="https://images.deliveryhero.io/image/fd-sg/Products/41918848.jpg?width=400&height=280" alt="Streaky Bacon Tom Yam Egg Fried Rice" loading="lazy">
         <div class="menu-card-body">
           <h3>5G. Streaky Bacon Tom Yam Egg Fried Rice 培根冬炎蛋炒饭</h3>
           <p>Bacon fried rice with Thai Tom Yum sauce — savoury, sour, and spicy.</p>
-          <div class="menu-card-footer">
-            <span class="price">from S$10.10</span>
-            <span class="badge badge-new">Limited Time</span>
-          </div>
+          <div class="menu-card-footer"><span class="price">from S$10.10</span><span class="badge badge-new">Limited Time</span></div>
         </div>
       </div>
-      <div class="menu-card" data-cat="special">
+      <div class="menu-card">
         <img class="menu-card-img" src="https://images.deliveryhero.io/image/fd-sg/Products/41918850.jpg?width=400&height=280" alt="Streaky Bacon Mala Egg Fried Rice" loading="lazy">
         <div class="menu-card-body">
           <h3>5G. Streaky Bacon Mala Egg Fried Rice 培根麻辣蛋炒饭</h3>
-          <p>Bacon fried rice with Chinese Style Mala sauce — spicy and numbing.</p>
-          <div class="menu-card-footer">
-            <span class="price">from S$10.10</span>
-            <span class="badge badge-new">Limited Time</span>
-          </div>
+          <p>Bacon fried rice with Chinese Style Mala sauce — addictive spicy and numbing sensation.</p>
+          <div class="menu-card-footer"><span class="price">from S$10.10</span><span class="badge badge-new">Limited Time</span></div>
         </div>
       </div>
     </div>
-
+ 
     <!-- SNACKS -->
-    <div class="menu-cat" id="cat-snacks" style="grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.4rem;">
-      <div class="menu-card" data-cat="snacks">
+    <div class="menu-cat" id="cat-snacks">
+      <div class="menu-card">
         <img class="menu-card-img" src="https://images.deliveryhero.io/image/fd-sg/Products/51655158.jpg?width=400&height=280" alt="Luncheon Meat Fries" loading="lazy">
         <div class="menu-card-body">
           <h3>Luncheon Meat Fries 午餐肉薯条</h3>
@@ -594,11 +549,13 @@
         </div>
       </div>
     </div>
-
+ 
   </div>
 </section>
-
-<!-- ABOUT -->
+ 
+<!-- ═══════════════════════════════════════
+     ABOUT
+═══════════════════════════════════════ -->
 <section id="about" class="about">
   <div class="container">
     <div class="about-inner">
@@ -616,13 +573,15 @@
         </div>
       </div>
       <div class="about-img">
-        <img src="https://images.deliveryhero.io/image/fd-sg/LH/erdb-hero.jpg?width=600&quality=80" alt="King of Fried Rice stall" style="border-radius: 12px;">
+        <img src="https://images.deliveryhero.io/image/fd-sg/LH/erdb-hero.jpg?width=600&quality=80" alt="King of Fried Rice stall" style="border-radius:12px;">
       </div>
     </div>
   </div>
 </section>
-
-<!-- REVIEWS -->
+ 
+<!-- ═══════════════════════════════════════
+     REVIEWS
+═══════════════════════════════════════ -->
 <section class="reviews">
   <div class="container">
     <h2 class="section-title">What Our Customers Say</h2>
@@ -646,55 +605,72 @@
     </div>
   </div>
 </section>
-
-<!-- FIND US -->
+ 
+<!-- ═══════════════════════════════════════
+     FIND US
+     FIX: Use maps.google.com/maps?q=...&output=embed
+     NOT google.com/maps/embed?pb=...
+     The pb= format caused Vercel 404 because
+     Vercel tried to route it as a local path.
+     To get a real embed: Google Maps → Share
+     → Embed a map → copy the iframe → paste below.
+═══════════════════════════════════════ -->
 <section id="find-us">
   <div class="container">
     <h2 class="section-title">Find Us</h2>
     <p class="section-sub">Over 20 locations across Singapore · Mon–Sun 10:30am–9:00pm</p>
-
     <div class="locations-grid">
       <div class="location-card">
         <h3>📍 Fusionpolis (Galaxis)</h3>
-        <p>Fusionopolis Pl, #01-33, Singapore 138522</p>
+        <p>Galaxis, Fusionopolis Pl, #01-33</p>
+        <p>Singapore 138522</p>
         <p>🕐 Daily 10:30am – 9:00pm</p>
       </div>
       <div class="location-card">
         <h3>📍 ION Orchard</h3>
-        <p>2 Orchard Turn, ION Orchard, Singapore</p>
+        <p>2 Orchard Turn, ION Orchard</p>
+        <p>Singapore 238801</p>
         <p>🕐 Daily 10:30am – 9:00pm</p>
       </div>
       <div class="location-card">
         <h3>📍 Holland Close</h3>
-        <p>31 Holland Close, Singapore</p>
+        <p>31 Holland Close</p>
+        <p>Singapore 271031</p>
         <p>🕐 Daily 10:30am – 9:00pm</p>
       </div>
       <div class="location-card">
         <h3>📍 Tampines Mart</h3>
-        <p>Tampines Mart, Singapore</p>
+        <p>9 Tampines Grande, Tampines Mart</p>
+        <p>Singapore 528735</p>
         <p>🕐 Daily 10:30am – 9:00pm</p>
       </div>
     </div>
-
-    <!-- 
-      HOW TO EMBED A REAL GOOGLE MAP:
-      1. Go to maps.google.com and search for "King of Fried Rice Singapore"
-      2. Click Share → Embed a map
-      3. Copy the <iframe> code and replace the placeholder below
-
-      For now, this links to their actual Google Maps search:
-    -->
     <div class="map-embed">
+      <!--
+        REPLACE THIS iframe with the one from Google Maps:
+        1. Go to maps.google.com
+        2. Search: King of Fried Rice Singapore
+        3. Click Share → Embed a map
+        4. Copy the entire <iframe ...></iframe> and paste here
+      -->
       <iframe
-        src="<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.791394004209!2d103.78550697596577!3d1.2999900617320095!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31da1b002151352b%3A0xb700c835cfcf3b60!2sKing%20of%20Fried%20Rice!5e0!3m2!1sen!2ssg!4v1776525607041!5m2!1sen!2ssg" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>"
-        allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
-        title="King of Fried Rice locations">
+        src="https://maps.google.com/maps?q=King+of+Fried+Rice+Singapore&output=embed&z=12"
+        allowfullscreen=""
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        title="King of Fried Rice locations in Singapore">
       </iframe>
     </div>
   </div>
 </section>
-
-<!-- ORDER CTA -->
+ 
+<!-- ═══════════════════════════════════════
+     ORDER CTA
+     FIX: Foodpanda link now points to the
+     correct King of Fried Rice outlet (erdb),
+     not the generic chain URL that went to
+     Burger King.
+═══════════════════════════════════════ -->
 <section id="contact" class="order-cta">
   <div class="container">
     <h2>Order Now</h2>
@@ -703,13 +679,13 @@
       <a href="https://wa.me/6512345678" class="btn-whatsapp" target="_blank" rel="noopener">
         💬 WhatsApp Us
       </a>
-      <a href="https://www.foodpanda.sg/chain/cz1ow/king-of-fried-rice" class="btn-foodpanda" target="_blank" rel="noopener">
+      <a href="https://www.foodpanda.sg/restaurant/erdb/king-of-fried-rice-fusionpolis" class="btn-foodpanda" target="_blank" rel="noopener">
         🐼 Order on Foodpanda
       </a>
     </div>
   </div>
 </section>
-
+ 
 <!-- FOOTER -->
 <footer>
   <div class="container">
@@ -723,84 +699,78 @@
     </div>
   </div>
 </footer>
-
+ 
+<!-- ═══════════════════════════════════════
+     JAVASCRIPT
+═══════════════════════════════════════ -->
 <script>
-// ── MOBILE MENU ──
+// ── MOBILE NAV ──────────────────────────
 const menuToggle = document.getElementById('menuToggle');
-const navLinks = document.getElementById('navLinks');
+const navLinks   = document.getElementById('navLinks');
 menuToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
-document.querySelectorAll('.nav-links a').forEach(link => {
-  link.addEventListener('click', () => navLinks.classList.remove('open'));
-});
-
-// ── HERO SLIDER ──
+document.querySelectorAll('.nav-links a').forEach(l =>
+  l.addEventListener('click', () => navLinks.classList.remove('open'))
+);
+ 
+// ── HERO SLIDER ─────────────────────────
+// Slide 1 is already .active in the HTML so it shows before this JS runs.
+// JS only handles the auto-advance and dot creation.
 const slides = document.querySelectorAll('.hero-slide');
-const dotsContainer = document.getElementById('heroDots');
-let current = 0;
-
-// Create dots
+const dotsWrap = document.getElementById('heroDots');
+let cur = 0;
+ 
 slides.forEach((_, i) => {
-  const dot = document.createElement('button');
-  dot.className = 'dot' + (i === 0 ? ' active' : '');
-  dot.setAttribute('aria-label', `Go to slide ${i + 1}`);
-  dot.addEventListener('click', () => goTo(i));
-  dotsContainer.appendChild(dot);
+  const d = document.createElement('button');
+  d.className = 'dot' + (i === 0 ? ' active' : '');
+  d.setAttribute('aria-label', 'Slide ' + (i + 1));
+  d.onclick = () => goTo(i);
+  dotsWrap.appendChild(d);
 });
-
+ 
 function goTo(n) {
-  slides[current].classList.remove('active');
-  dotsContainer.children[current].classList.remove('active');
-  current = (n + slides.length) % slides.length;
-  slides[current].classList.add('active');
-  dotsContainer.children[current].classList.add('active');
+  slides[cur].classList.remove('active');
+  dotsWrap.children[cur].classList.remove('active');
+  cur = (n + slides.length) % slides.length;
+  slides[cur].classList.add('active');
+  dotsWrap.children[cur].classList.add('active');
 }
-
-// Auto-advance every 4 seconds
-let timer = setInterval(() => goTo(current + 1), 4000);
-dotsContainer.addEventListener('click', () => { clearInterval(timer); timer = setInterval(() => goTo(current + 1), 4000); });
-
-// ── MENU TABS ──
-const tabBtns = document.querySelectorAll('.tab-btn');
+ 
+let timer = setInterval(() => goTo(cur + 1), 4500);
+dotsWrap.addEventListener('click', () => {
+  clearInterval(timer);
+  timer = setInterval(() => goTo(cur + 1), 4500);
+});
+ 
+// ── MENU TABS ────────────────────────────
+// Shows "All" by default (all cats visible).
+// Clicking a tab hides all others and shows
+// only the selected category.
+const tabBtns  = document.querySelectorAll('.tab-btn');
 const menuCats = document.querySelectorAll('.menu-cat');
-
+ 
+// Set initial state: all visible
+menuCats.forEach(el => { el.style.display = 'grid'; el.classList.add('visible'); });
+ 
 tabBtns.forEach(btn => {
   btn.addEventListener('click', () => {
     const cat = btn.dataset.cat;
-
-    // Update active tab
     tabBtns.forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-
-    // Show/hide categories
-    menuCats.forEach(el => {
-      el.classList.remove('visible');
-      el.style.display = 'none';
-    });
-
+    menuCats.forEach(el => { el.style.display = 'none'; el.classList.remove('visible'); });
     if (cat === 'all') {
-      // Show all
-      menuCats.forEach(el => {
-        el.classList.add('visible');
-        el.style.display = 'grid';
-      });
+      menuCats.forEach(el => { el.style.display = 'grid'; el.classList.add('visible'); });
     } else {
-      const target = document.getElementById('cat-' + cat);
-      if (target) {
-        target.classList.add('visible');
-        target.style.display = 'grid';
-      }
+      const t = document.getElementById('cat-' + cat);
+      if (t) { t.style.display = 'grid'; t.classList.add('visible'); }
     }
   });
 });
-
-// ── SMOOTH SCROLL ──
-document.querySelectorAll('a[href^="#"]').forEach(link => {
-  link.addEventListener('click', e => {
-    const target = document.querySelector(link.getAttribute('href'));
-    if (target) {
-      e.preventDefault();
-      target.scrollIntoView({ behavior: 'smooth' });
-    }
+ 
+// ── SMOOTH SCROLL ────────────────────────
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const t = document.querySelector(a.getAttribute('href'));
+    if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' }); }
   });
 });
 </script>
